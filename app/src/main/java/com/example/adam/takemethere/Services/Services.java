@@ -17,8 +17,18 @@ public class Services extends Application{
     private double Rlongitude;
     private double Rlatitude;
     private String Rlocation;
+    private double uDistance;
 
+    public double getUdistance() {
 
+        return uDistance;
+    }
+
+    public void setuDistance(double aName) {
+
+        uDistance = aName;
+
+    }
     public double getLongitude() {
 
         return longitude;

@@ -1,6 +1,7 @@
 package com.example.adam.takemethere;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.StringDef;
@@ -125,7 +126,7 @@ public class drive extends AppCompatActivity{
                 duckets Grove:52.857281 , -6.812316
                 Rathwood: 52.796104 , -6.659993
                 Oak Park: 52.8636388 , -6.8947948*/
-
+                // getting the random place from the travel distance selected //
                 randomPlace();
 
 
@@ -148,37 +149,58 @@ public class drive extends AppCompatActivity{
         double Rlongitude = globalVariable.getRLongitude();
         double latitude = globalVariable.getLatitude();
         double longitude = globalVariable.getLongitude();
+        double distanceInMeters=999999999; //=99999 in kms
+        double uDistance = globalVariable.getUdistance();
+        Toast.makeText(getApplicationContext(), uDistance+ "selected distance in kms", Toast.LENGTH_LONG).show();
 
-        Random rand = new Random();
-        int n = rand.nextInt(3);
-        switch (n){
-            // Oak Park //
-            case 0:
-                globalVariable.setRLatitude(52.8636388);
-                globalVariable.setRLongitude(-6.8947948);
-                break;
-            case 1:
-                globalVariable.setRLatitude(52.735844);
-                globalVariable.setRLongitude(-6.720746);
-                break;
-            // Duckets Grove //
-            case 2:
-                globalVariable.setRLatitude(52.857218);
-                globalVariable.setRLongitude(-6.812316);
-                break;
-            // Rathwood //
-            case 3:
-                globalVariable.setRLatitude(52.796104);
-                globalVariable.setRLongitude(-6.659993);
-                break;
-        }
-        Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
+       // while(distanceInMeters < uDistance ) {
+            Random rand = new Random();
+            Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
-            int Radius = 6371;// radius of earth in Km
-            double lat1 = StartP.latitude;
-            double lat2 = EndP.latitude;
-            double lon1 = StartP.longitude;
-            double lon2 = EndP.longitude;
+            int n = rand.nextInt(3);
+            switch (n) {
+                // Oak Park //
+                case 0:
+                    globalVariable.setRLatitude(52.8636388);
+                    globalVariable.setRLongitude(-6.8947948);
+                    break;
+                // altamount gardens //
+                case 1:
+                    globalVariable.setRLatitude(52.735844);
+                    globalVariable.setRLongitude(-6.720746);
+                    break;
+                // Duckets Grove //
+                case 2:
+                    globalVariable.setRLatitude(52.857218);
+                    globalVariable.setRLongitude(-6.812316);
+                    break;
+                // Rathwood //
+                case 3:
+                    globalVariable.setRLatitude(52.796104);
+                    globalVariable.setRLongitude(-6.659993);
+                    break;
+            }
+            Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
+
+          // distanceInMeters = loc1.distanceTo(loc2);
+            distanceInMeters = calcDistance(latitude,longitude,Rlatitude,Rlongitude); //now actually kms
+            if(distanceInMeters > uDistance){
+                randomPlace();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), distanceInMeters + "distance appart", Toast.LENGTH_LONG).show();
+            }
+
+        //}
+
+
+    }
+public double calcDistance(double StartPlat, double StartPlong, double EndPlat, double EndPlong){
+    int Radius = 6371;// radius of earth in Km
+            double lat1 = StartPlat;
+            double lat2 = EndPlat;
+            double lon1 = StartPlong;
+            double lon2 = EndPlong;
             double dLat = Math.toRadians(lat2 - lat1);
             double dLon = Math.toRadians(lon2 - lon1);
             double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
@@ -196,16 +218,15 @@ public class drive extends AppCompatActivity{
                     + " Meter   " + meterInDec);
 
 
-            //return Radius * c;
-
-
-    }
-
+    return Radius * c;
+}
 
     public void seekbarr() {
         seek_bar = (SeekBar) findViewById(R.id.DistanceBar);
         text_view = (TextView) findViewById(R.id.Miles);
         text_view.setText("Miles " + seek_bar.getProgress());
+        final Services globalVariable = (Services) getApplicationContext();
+
 
         seek_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress_value;
@@ -213,6 +234,7 @@ public class drive extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
+
 
             }
 
@@ -226,6 +248,13 @@ public class drive extends AppCompatActivity{
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // TODO Auto-generated method stub
                  text_view.setText("Miles" + progress);
+                // converting user selected distance to meters //
+                double prog = progress;
+               // Toast.makeText(getApplicationContext(), prog+ "selected distance in kms", Toast.LENGTH_LONG).show();
+
+                globalVariable.setuDistance(prog);
+
+
 
 
             }
