@@ -157,7 +157,7 @@ public class drive extends AppCompatActivity{
             Random rand = new Random();
             Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
-            int n = rand.nextInt(3);
+            int n = rand.nextInt(4);
             switch (n) {
                 // Oak Park //
                 case 0:
@@ -178,6 +178,11 @@ public class drive extends AppCompatActivity{
                 case 3:
                     globalVariable.setRLatitude(52.796104);
                     globalVariable.setRLongitude(-6.659993);
+                    break;
+                // Gilberts Orchard //
+                case 4:
+                    globalVariable.setRLatitude(52.732383);
+                    globalVariable.setRLongitude(-6.648521399999936);
                     break;
             }
             Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
