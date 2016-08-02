@@ -30,12 +30,15 @@ public class drive extends AppCompatActivity{
     private static TextView text_view;
     Button btnShowLocation;
 
+
     // GPSTracker class
     GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        final Services globalVariable = (Services) getApplicationContext();
+        globalVariable.setLongitude(0);
+        globalVariable.setLatitude(0);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drive);
@@ -181,8 +184,10 @@ public class drive extends AppCompatActivity{
                     break;
                 // Gilberts Orchard //
                 case 4:
+                    String place="gilbert";
                     globalVariable.setRLatitude(52.732383);
                     globalVariable.setRLongitude(-6.648521399999936);
+                   // globalVariable.setRlocation("sd");
                     break;
             }
             Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();

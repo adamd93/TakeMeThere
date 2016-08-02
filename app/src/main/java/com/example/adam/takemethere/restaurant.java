@@ -35,7 +35,9 @@ public class restaurant extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        final Services globalVariable = (Services) getApplicationContext();
+        globalVariable.setLongitude(0);
+        globalVariable.setLatitude(0);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant);
@@ -157,7 +159,7 @@ public class restaurant extends AppCompatActivity{
         Random rand = new Random();
         Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
-        int n = rand.nextInt(3);
+        int n = rand.nextInt(6);
         switch (n) {
           // Weeping Thiager Carlow //
             case 0:
@@ -179,6 +181,31 @@ public class restaurant extends AppCompatActivity{
                 globalVariable.setRLatitude(52.8365072);
                 globalVariable.setRLongitude(-6.934135900000001);
                 break;
+            // the Jasmine //
+            case 4:
+                globalVariable.setRLatitude(52.8359518);
+                globalVariable.setRLongitude(-6.9194409000000405);
+                break;
+            // Lennons Visual //
+            case 5:
+                globalVariable.setRLatitude(52.839714);
+                globalVariable.setRLongitude(-6.928389299999935);
+                break;
+            //Teach dolmen //
+            case 6:
+                globalVariable.setRLatitude(52.8361513);
+                globalVariable.setRLongitude(-6.928155299999958);
+                break;
+            // lemonGrass //
+            case 7:
+                globalVariable.setRLatitude(52.8350289);
+                globalVariable.setRLongitude(-6.929552000000058);
+                break;
+            case 8:
+                globalVariable.setRLatitude(52.8350289);
+                globalVariable.setRLongitude(-6.929552000000058);
+                break;
+
         }
         Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
 

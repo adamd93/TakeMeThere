@@ -16,7 +16,7 @@ public class Services extends Application{
     private double latitude;
     private double Rlongitude;
     private double Rlatitude;
-    private String Rlocation;
+    private String Rlocation="";
     private double uDistance;
 
     public double getUdistance() {
@@ -70,14 +70,14 @@ public class Services extends Application{
 
         Rlatitude = aEmail;
     }
-    public String setRlocation() {
-
-        return Rlocation;
-    }
 
     public void getRlocation(String aEmail) {
 
         Rlocation = aEmail;
+    }
+    public String setRlocation() {
+
+        return Rlocation;
     }
 
 }
