@@ -29,6 +29,7 @@ public class drive extends AppCompatActivity{
     private static SeekBar seek_bar;
     private static TextView text_view;
     Button btnShowLocation;
+    String place;
 
 
     // GPSTracker class
@@ -103,6 +104,9 @@ public class drive extends AppCompatActivity{
 
 
                 Intent intent = new Intent(getBaseContext(), MapsActivityDrive.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("key", place);
+                intent.putExtras(mBundle);
                 startActivity(intent);
                 break;
 
@@ -116,8 +120,10 @@ public class drive extends AppCompatActivity{
 
 
                     // \n is for new line
-                    Toast.makeText(getApplicationContext(),"Gathering GPS Data...", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Generating Random Place...", Toast.LENGTH_SHORT).show();
+
+                    //  Toast.makeText(getApplicationContext(),"Gathering GPS Data...", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                 }else{
                     // can't get location
                     // GPS or Network is not enabled
@@ -154,11 +160,11 @@ public class drive extends AppCompatActivity{
         double longitude = globalVariable.getLongitude();
         double distanceInMeters=999999999; //=99999 in kms
         double uDistance = globalVariable.getUdistance();
-        Toast.makeText(getApplicationContext(), uDistance+ "selected distance in kms", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), uDistance+ "selected distance in kms", Toast.LENGTH_LONG).show();
 
        // while(distanceInMeters < uDistance ) {
             Random rand = new Random();
-            Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
             int n = rand.nextInt(4);
             switch (n) {
@@ -166,31 +172,35 @@ public class drive extends AppCompatActivity{
                 case 0:
                     globalVariable.setRLatitude(52.8636388);
                     globalVariable.setRLongitude(-6.8947948);
+                    place="oak Park";
                     break;
                 // altamount gardens //
                 case 1:
                     globalVariable.setRLatitude(52.735844);
                     globalVariable.setRLongitude(-6.720746);
+                    place = "Altamount Gardens";
                     break;
                 // Duckets Grove //
                 case 2:
                     globalVariable.setRLatitude(52.857218);
                     globalVariable.setRLongitude(-6.812316);
+                    place="Duckets Grove";
                     break;
                 // Rathwood //
                 case 3:
                     globalVariable.setRLatitude(52.796104);
                     globalVariable.setRLongitude(-6.659993);
+                    place="Rathwood";
                     break;
                 // Gilberts Orchard //
                 case 4:
-                    String place="gilbert";
+                    String place="Gilberts Orchard";
                     globalVariable.setRLatitude(52.732383);
                     globalVariable.setRLongitude(-6.648521399999936);
                    // globalVariable.setRlocation("sd");
                     break;
             }
-            Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
 
           // distanceInMeters = loc1.distanceTo(loc2);
             distanceInMeters = calcDistance(latitude,longitude,Rlatitude,Rlongitude); //now actually kms
@@ -234,7 +244,7 @@ public double calcDistance(double StartPlat, double StartPlong, double EndPlat, 
     public void seekbarr() {
         seek_bar = (SeekBar) findViewById(R.id.DistanceBar);
         text_view = (TextView) findViewById(R.id.Miles);
-        text_view.setText("Miles " + seek_bar.getProgress());
+        text_view.setText(seek_bar.getProgress() + " Km");
         final Services globalVariable = (Services) getApplicationContext();
 
 
@@ -251,13 +261,13 @@ public double calcDistance(double StartPlat, double StartPlong, double EndPlat, 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
-                text_view.setText(progress_value + "km");
+                text_view.setText(progress_value + " Km");
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // TODO Auto-generated method stub
-                 text_view.setText("Miles" + progress);
+                 text_view.setText(progress + " Km");
                 // converting user selected distance to meters //
                 double prog = progress;
                // Toast.makeText(getApplicationContext(), prog+ "selected distance in kms", Toast.LENGTH_LONG).show();

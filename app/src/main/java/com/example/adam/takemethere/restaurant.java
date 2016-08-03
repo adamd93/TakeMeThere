@@ -29,6 +29,7 @@ public class restaurant extends AppCompatActivity{
     private static SeekBar seek_bar;
     private static TextView text_view;
     Button btnShowLocation;
+    String place;
 
     // GPSTracker class
     GPSTracker gps;
@@ -102,6 +103,10 @@ public class restaurant extends AppCompatActivity{
 
 
                 Intent intent = new Intent(getBaseContext(), MapsActivityDrive.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("key", place);
+                intent.putExtras(mBundle);
+                startActivity(intent);
                 startActivity(intent);
                 break;
 
@@ -115,8 +120,10 @@ public class restaurant extends AppCompatActivity{
 
 
                     // \n is for new line
-                    Toast.makeText(getApplicationContext(),"Gathering GPS Data...", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Generating random Restaurant", Toast.LENGTH_SHORT).show();
+
+                    // Toast.makeText(getApplicationContext(),"Gathering GPS Data...", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                 }else{
                     // can't get location
                     // GPS or Network is not enabled
@@ -153,51 +160,59 @@ public class restaurant extends AppCompatActivity{
         double longitude = globalVariable.getLongitude();
         double distanceInMeters=999999999; //=99999 in kms
         double uDistance = globalVariable.getUdistance();
-        Toast.makeText(getApplicationContext(), uDistance+ "selected distance in kms", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), uDistance+ "selected distance in kms", Toast.LENGTH_LONG).show();
 
         // while(distanceInMeters < uDistance ) {
         Random rand = new Random();
-        Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
         int n = rand.nextInt(6);
         switch (n) {
           // Weeping Thiager Carlow //
             case 0:
+                place="Weeping Thiager";
                 globalVariable.setRLatitude(52.8365072);
                 globalVariable.setRLongitude(-6.934135900000001);
                 break;
             // Ho's chinese
             case 1:
+                place="Ho's Chinese";
                 globalVariable.setRLatitude(52.8365072);
                 globalVariable.setRLongitude(-6.934135900000001);
                 break;
             // Apache Pizza //
             case 2:
+                place="Apache Pizza";
                 globalVariable.setRLatitude(52.8355179);
                 globalVariable.setRLongitude(-6.929197799999997);
                 break;
             // Milano's takeaway //
             case 3:
+                place="Milano's Takeaway";
                 globalVariable.setRLatitude(52.8365072);
                 globalVariable.setRLongitude(-6.934135900000001);
                 break;
             // the Jasmine //
             case 4:
+                place="The Jasmine";
                 globalVariable.setRLatitude(52.8359518);
                 globalVariable.setRLongitude(-6.9194409000000405);
                 break;
             // Lennons Visual //
             case 5:
+                place="Lennons @ Visual";
                 globalVariable.setRLatitude(52.839714);
                 globalVariable.setRLongitude(-6.928389299999935);
                 break;
             //Teach dolmen //
             case 6:
+                place="Teach Dolmen";
                 globalVariable.setRLatitude(52.8361513);
                 globalVariable.setRLongitude(-6.928155299999958);
                 break;
             // lemonGrass //
             case 7:
+                place="Lemon Grass";
                 globalVariable.setRLatitude(52.8350289);
                 globalVariable.setRLongitude(-6.929552000000058);
                 break;
@@ -207,7 +222,7 @@ public class restaurant extends AppCompatActivity{
                 break;
 
         }
-        Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
 
         // distanceInMeters = loc1.distanceTo(loc2);
         distanceInMeters = calcDistance(latitude,longitude,Rlatitude,Rlongitude); //now actually kms
@@ -215,7 +230,7 @@ public class restaurant extends AppCompatActivity{
             randomPlace();
         }
         else{
-            Toast.makeText(getApplicationContext(), distanceInMeters + "distance appart", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), distanceInMeters + "distance appart", Toast.LENGTH_LONG).show();
         }
 
         //}
@@ -251,7 +266,7 @@ public class restaurant extends AppCompatActivity{
     public void seekbarr() {
         seek_bar = (SeekBar) findViewById(R.id.DistanceBar);
         text_view = (TextView) findViewById(R.id.Miles);
-        text_view.setText("Miles " + seek_bar.getProgress());
+        text_view.setText(seek_bar.getProgress()+ " Km");
         final Services globalVariable = (Services) getApplicationContext();
 
 
@@ -268,13 +283,13 @@ public class restaurant extends AppCompatActivity{
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
-                text_view.setText(progress_value + "km");
+                text_view.setText(progress_value + " Km");
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // TODO Auto-generated method stub
-                text_view.setText("Miles" + progress);
+                text_view.setText(progress + " Km");
                 // converting user selected distance to meters //
                 double prog = progress;
                 // Toast.makeText(getApplicationContext(), prog+ "selected distance in kms", Toast.LENGTH_LONG).show();

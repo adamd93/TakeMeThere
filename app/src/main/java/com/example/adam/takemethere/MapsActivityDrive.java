@@ -86,11 +86,13 @@ public class MapsActivityDrive extends FragmentActivity implements OnMapReadyCal
         // Add a marker to users location and move the camera
         LatLng userLocation = new LatLng(latitude, longitude);
         LatLng randomLocation = new LatLng(Rlatitude,Rlongitude);
+        String value = getIntent().getExtras().getString("key");
+
         // users marker //
-        mMap.addMarker(new MarkerOptions().position(userLocation).title("Your location"));
+        mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
 
         // Random location marker //
-        mMap.addMarker(new MarkerOptions().position(randomLocation).title("Random Location"));
+        mMap.addMarker(new MarkerOptions().position(randomLocation).title(value));
 
         // mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10));

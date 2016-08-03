@@ -17,5 +17,15 @@
         android:id="@+id/btnDirections"
         android:layout_marginTop="20dp"
         android:paddingRight="10dp"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Random place"
+        android:clickable="false"
+        android:padding="10dp"
+        android:id="@+id/place"
+        android:layout_marginBottom="2dp"
+        android:paddingRight="10dp"/>
 
 </fragment>
