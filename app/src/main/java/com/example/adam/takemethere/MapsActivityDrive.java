@@ -18,6 +18,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.DecimalFormat;
 
@@ -104,6 +106,14 @@ public class MapsActivityDrive extends FragmentActivity implements OnMapReadyCal
                 .addApi(Places.PLACE_DETECTION_API)
 
                 .build();
+        // Instantiates a new Polyline object and adds points to define a rectangle
+        PolylineOptions rectOptions = new PolylineOptions()
+                .add(new LatLng(latitude,longitude))
+                .add(new LatLng(Rlatitude, Rlongitude)) ; // North of the previous point, but at the same longitude
+
+
+// Get back the mutable Polyline
+        Polyline polyline = mMap.addPolyline(rectOptions);
     }
 
     @Override
