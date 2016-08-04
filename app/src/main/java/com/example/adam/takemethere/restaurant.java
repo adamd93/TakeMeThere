@@ -166,7 +166,7 @@ public class restaurant extends AppCompatActivity{
         Random rand = new Random();
        // Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
-        int n = rand.nextInt(6);
+        int n = rand.nextInt(14);
         switch (n) {
           // Weeping Thiager Carlow //
             case 0:
@@ -217,9 +217,43 @@ public class restaurant extends AppCompatActivity{
                 globalVariable.setRLongitude(-6.929552000000058);
                 break;
             case 8:
+                place="Joe's Chinese";
+                globalVariable.setRLatitude(52.8364779);
+                globalVariable.setRLongitude(-6.933574799999974);
+                break;
+            case 9:
+                place="Bombay Dinner";
+                globalVariable.setRLatitude(52.83509);
+                globalVariable.setRLongitude(-6.925709999999981);
+                break;
+            case 10:
+                place="Curry Garden";
+                globalVariable.setRLatitude(52.8389209);
+                globalVariable.setRLongitude(-6.942666700000018);
+                break;
+            case 11:
+                place="KUNF FU chinese";
+                globalVariable.setRLatitude(52.8376196);
+                globalVariable.setRLongitude(-6.938386499999979);
+                break;
+            case 12:
+                place="Mimosa Wine & Tapas";
+                globalVariable.setRLatitude(52.8374599);
+                globalVariable.setRLongitude(-6.929054299999962);
+                break;
+            case 13:
+                place="Pimento Tapas";
                 globalVariable.setRLatitude(52.8350289);
                 globalVariable.setRLongitude(-6.929552000000058);
                 break;
+            case 14:
+                place="Eddie Rockets";
+                globalVariable.setRLatitude(52.8365072);
+                globalVariable.setRLongitude(-6.934135900000001);
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), " Random Location not found, Please try again...", Toast.LENGTH_LONG).show();
+
 
         }
         //Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();

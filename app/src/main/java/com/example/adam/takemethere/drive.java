@@ -160,13 +160,14 @@ public class drive extends AppCompatActivity{
         double longitude = globalVariable.getLongitude();
         double distanceInMeters=999999999; //=99999 in kms
         double uDistance = globalVariable.getUdistance();
+
         //Toast.makeText(getApplicationContext(), uDistance+ "selected distance in kms", Toast.LENGTH_LONG).show();
 
        // while(distanceInMeters < uDistance ) {
             Random rand = new Random();
             //Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
-            int n = rand.nextInt(4);
+            int n = rand.nextInt(14);
             switch (n) {
                 // Oak Park //
                 case 0:
@@ -194,11 +195,58 @@ public class drive extends AppCompatActivity{
                     break;
                 // Gilberts Orchard //
                 case 4:
-                    String place="Gilberts Orchard";
+                    place="Gilberts Orchard";
                     globalVariable.setRLatitude(52.732383);
                     globalVariable.setRLongitude(-6.648521399999936);
                    // globalVariable.setRlocation("sd");
                     break;
+                case 6:
+                    place="Visual Arts Center Carlow";
+                    globalVariable.setRLatitude(52.839714);
+                    globalVariable.setRLongitude(-6.928389299999935);
+                    break;
+                case 7:
+                    place="Kilkenny Castle";
+                    globalVariable.setRLatitude(52.6504624);
+                    globalVariable.setRLongitude(-7.249297899999988);
+                    break;
+                case 8:
+                    place="Glendalough";
+                    globalVariable.setRLatitude(53.01197999999999);
+                    globalVariable.setRLongitude(-6.32983999999999);
+                    break;
+                case 9:
+                    place="The Nine Stones, Mt.Leinster";
+                    globalVariable.setRLatitude(52.6361111);
+                    globalVariable.setRLongitude(-6.772222199999987);
+                    break;
+                case 10:
+                    place = "Kilmainhan Gaol";
+                    globalVariable.setRLatitude(53.34208719999999);
+                    globalVariable.setRLongitude(-6.310002199999985);
+                    break;
+                case 11:
+                    place = "Powerscout House & Gardens";
+                    globalVariable.setRLatitude(53.184251);
+                    globalVariable.setRLongitude(-6.186632700000018);
+                    break;
+                case 12:
+                    place = "Pirates Cove Mini golf";
+                    globalVariable.setRLatitude(52.6429983);
+                    globalVariable.setRLongitude(-6.23281);
+                    break;
+                case 13:
+                    place = "Castlecomer Adventure Park";
+                    globalVariable.setRLatitude(52.8065903);
+                    globalVariable.setRLongitude(-7.203715500000044);
+                    break;
+                case 14:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                default:
+                    Toast.makeText(getApplicationContext(), " Random Location not found, Please try again...", Toast.LENGTH_LONG).show();
             }
             //Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
 

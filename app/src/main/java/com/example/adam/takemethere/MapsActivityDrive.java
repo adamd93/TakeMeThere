@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.adam.takemethere.Services.Services;
 import com.google.android.gms.appindexing.Action;
@@ -44,6 +45,7 @@ public class MapsActivityDrive extends FragmentActivity implements OnMapReadyCal
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     public void onClick(View view) {
@@ -89,7 +91,8 @@ public class MapsActivityDrive extends FragmentActivity implements OnMapReadyCal
         LatLng userLocation = new LatLng(latitude, longitude);
         LatLng randomLocation = new LatLng(Rlatitude,Rlongitude);
         String value = getIntent().getExtras().getString("key");
-
+        Button mButton=(Button)findViewById(R.id.place);
+        mButton.setText(value);
         // users marker //
         mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
 
