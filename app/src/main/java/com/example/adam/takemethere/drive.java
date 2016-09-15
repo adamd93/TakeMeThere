@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.adam.takemethere.Logic.MainScreen;
 import com.example.adam.takemethere.R;
+import com.example.adam.takemethere.Services.DriveLocation;
 import com.example.adam.takemethere.Services.Services;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -31,7 +32,6 @@ public class drive extends AppCompatActivity{
     Button btnShowLocation;
     String place;
 
-
     // GPSTracker class
     GPSTracker gps;
 
@@ -46,7 +46,7 @@ public class drive extends AppCompatActivity{
         seekbarr();
         btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
 
-        // show location button click event
+        // The fuck is this shite? not even used?
 /*        btnShowLocation.setOnClickListener(new View.OnClickListener() {
 
 
@@ -136,21 +136,18 @@ public class drive extends AppCompatActivity{
                 Rathwood: 52.796104 , -6.659993
                 Oak Park: 52.8636388 , -6.8947948*/
                 // getting the random place from the travel distance selected //
-                randomPlace();
-
-
-
-
+               // randomPlace();
+                DriveLocation cls2= new DriveLocation();
+                cls2.randomPlace(); // should call random place for drive /
 
                 // Starting the map activity //
 
                 break;
-
-
         }
 
         if (newActivity != null) startActivity(newActivity);
     }
+    // whole method should become redundant, use DriveLocation instead //
     public void randomPlace(){
 
         final Services globalVariable = (Services) getApplicationContext();
@@ -167,7 +164,8 @@ public class drive extends AppCompatActivity{
             Random rand = new Random();
             //Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
 
-            int n = rand.nextInt(14);
+            int n = rand.nextInt(13);
+        // really need to make this into a json or API // SERIOUSLY!! //
             switch (n) {
                 // Oak Park //
                 case 0:
@@ -245,6 +243,103 @@ public class drive extends AppCompatActivity{
                     globalVariable.setRLatitude(52.654305);
                     globalVariable.setRLongitude(-7.2544450000000325);
                     break;
+                // need new locations from here down //
+                case 15:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 16:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 17:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 18:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 19:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 20:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 21:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 22:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 23:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 24:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 25:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 26:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 27:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 28:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 29:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 30:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 31:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 32:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+                case 33:
+                    place = "Smithwicks Experience";
+                    globalVariable.setRLatitude(52.654305);
+                    globalVariable.setRLongitude(-7.2544450000000325);
+                    break;
+
                 default:
                     Toast.makeText(getApplicationContext(), " Random Location not found, Please try again...", Toast.LENGTH_LONG).show();
             }
@@ -263,6 +358,7 @@ public class drive extends AppCompatActivity{
 
 
     }
+// need to make into its own service //
 public double calcDistance(double StartPlat, double StartPlong, double EndPlat, double EndPlong){
     int Radius = 6371;// radius of earth in Km
             double lat1 = StartPlat;
