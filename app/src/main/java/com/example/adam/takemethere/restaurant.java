@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.adam.takemethere.Logic.MainScreen;
 import com.example.adam.takemethere.R;
+import com.example.adam.takemethere.Services.GooglePlace;
+import com.example.adam.takemethere.Services.Places;
 import com.example.adam.takemethere.Services.Services;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -152,6 +154,8 @@ public class restaurant extends AppCompatActivity{
         if (newActivity != null) startActivity(newActivity);
     }
     public void randomPlace(){
+        Places places = new Places();
+        places.googlePlaces();
 
         final Services globalVariable = (Services) getApplicationContext();
         double Rlatitude = globalVariable.getRLatitude();
@@ -165,7 +169,6 @@ public class restaurant extends AppCompatActivity{
         // while(distanceInMeters < uDistance ) {
         Random rand = new Random();
        // Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
-
         int n = rand.nextInt(14);
         switch (n) {
           // Weeping Thiager Carlow //

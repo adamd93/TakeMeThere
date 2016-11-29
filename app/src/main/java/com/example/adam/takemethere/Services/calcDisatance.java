@@ -39,7 +39,7 @@ public class calcDisatance {
         return Radius * c;
     }
 
-    public void seekbarr() {
+    /*public void seekbarr() {
         seek_bar = (SeekBar) findViewById(R.id.DistanceBar);
         text_view = (TextView) findViewById(R.id.Miles);
         text_view.setText(seek_bar.getProgress() + " Km");
@@ -77,5 +77,5 @@ public class calcDisatance {
 
             }
         });
-    }
+    }*/
 }
