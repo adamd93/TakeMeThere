@@ -9,9 +9,13 @@ public class GooglePlace {
     private String category;
     private String rating;
     private String open;
+    private String county;
+    private double latitude;
+    private double longitude;
 
     public GooglePlace() {
         this.name = "";
+        this.county = "";
         this.rating = "";
         this.open = "";
         this.setCategory("");
@@ -23,6 +27,12 @@ public class GooglePlace {
 
     public String getName() {
         return name;
+    }
+    public void setCounty(String county){
+        this.county = county;
+    }
+    public String getCounty(){
+        return county;
     }
 
     public String getCategory() {
@@ -47,5 +57,19 @@ public class GooglePlace {
 
     public String getOpenNow() {
         return open;
+    }
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }

@@ -52,6 +52,7 @@ public class Places extends ListActivity {
 
     ArrayAdapter<String> myAdapter;
 
+   // public class googlePlaces (View,Void,String){
     public class googlePlaces extends AsyncTask<View, Void, String> {
 
         @Override

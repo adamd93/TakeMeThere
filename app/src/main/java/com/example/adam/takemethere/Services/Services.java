@@ -17,14 +17,14 @@ public class Services extends Application{
     private double Rlongitude;
     private double Rlatitude;
     private String Rlocation="";
-    private double uDistance;
+    private int uDistance;
 
-    public double getUdistance() {
+    public int getUdistance() {
 
         return uDistance;
     }
 
-    public void setuDistance(double aName) {
+    public void setuDistance(int aName) {
 
         uDistance = aName;
 

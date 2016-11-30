@@ -413,7 +413,7 @@ public double calcDistance(double StartPlat, double StartPlong, double EndPlat, 
                 // TODO Auto-generated method stub
                  text_view.setText(progress + " Km");
                 // converting user selected distance to meters //
-                double prog = progress;
+                int prog = progress *100;
                // Toast.makeText(getApplicationContext(), prog+ "selected distance in kms", Toast.LENGTH_LONG).show();
 
                 globalVariable.setuDistance(prog);

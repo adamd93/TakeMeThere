@@ -3,11 +3,13 @@ package com.example.adam.takemethere;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -20,7 +22,19 @@ import com.example.adam.takemethere.Services.Places;
 import com.example.adam.takemethere.Services.Services;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -30,8 +44,13 @@ import java.util.Random;
 public class restaurant extends AppCompatActivity{
     private static SeekBar seek_bar;
     private static TextView text_view;
+    ArrayList<GooglePlace> venuesList;
     Button btnShowLocation;
     String place;
+    String server_response;
+    double latitude = 52.839714;
+    double longitude = -6.928389299999935;
+    final String GOOGLE_KEY = "AIzaSyB-1fag6ZNgvgmIhFMQm6KAAUgA7mVY3gg";
 
     // GPSTracker class
     GPSTracker gps;
@@ -39,70 +58,26 @@ public class restaurant extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final Services globalVariable = (Services) getApplicationContext();
-        globalVariable.setLongitude(0);
-        globalVariable.setLatitude(0);
+       /* globalVariable.setLongitude(0);
+        globalVariable.setLatitude(0);*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant);
         seekbarr();
         btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
-
-        // show location button click event
-/*        btnShowLocation.setOnClickListener(new View.OnClickListener() {
-
-
-
-            @Override
-            public void onClick(View arg0) {
-
-
-                // create class object
-                gps = new GPSTracker(drive.this);
-
-            // check if GPS enabled
-                if(gps.canGetLocation()){
-                    final Services globalVariable = (Services) getApplicationContext();
-
-                    double latitude = gps.getLatitude();
-                    double longitude = gps.getLongitude();
-                    globalVariable.setLongitude(longitude);
-                    globalVariable.setLatitude(latitude);
-
-
-                    // \n is for new line
-                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-                }else{
-                    // can't get location
-                    // GPS or Network is not enabled
-                    // Ask user to enable GPS/network in settings
-                    gps.showSettingsAlert();
-                }
-                Toast.makeText(getApplicationContext(),"Gathering GPS Data...", Toast.LENGTH_SHORT).show();
-
-                   }
-
-
-
-
-        });*/
-
-
     }
 
     public void onClickNext(View view) {
         Intent newActivity = null;
-        final Services globalVariable = (Services) getApplicationContext();
+        //final Services globalVariable = (Services) getApplicationContext();
         gps = new GPSTracker(restaurant.this);
-        double latitude = globalVariable.getLatitude();
+       /* double latitude = globalVariable.getLatitude();
         double longitude = globalVariable.getLongitude();
-        double Rlatitude = globalVariable.getRLatitude();
-        double Rlongitude = globalVariable.getRLongitude();
-
-
+        /*double Rlatitude = globalVariable.getRLatitude();
+        double Rlongitude = globalVariable.getRLongitude();*/
 
         switch (view.getId()) {
             case R.id.showMap:
-
 
                 Intent intent = new Intent(getBaseContext(), MapsActivityDrive.class);
                 Bundle mBundle = new Bundle();
@@ -115,206 +90,186 @@ public class restaurant extends AppCompatActivity{
             case R.id.btnShowLocation:
                 if(gps.canGetLocation()){
 
-                    latitude = gps.getLatitude();
-                    longitude = gps.getLongitude();
-                    globalVariable.setLongitude(longitude);
-                    globalVariable.setLatitude(latitude);
-
+                    //latitude = gps.getLatitude();
+                    //longitude = gps.getLongitude();
+                   // globalVariable.setLongitude(longitude);
+                   // globalVariable.setLatitude(latitude);
 
                     // \n is for new line
                     Toast.makeText(getApplicationContext(),"Generating random Restaurant", Toast.LENGTH_SHORT).show();
 
-                    // Toast.makeText(getApplicationContext(),"Gathering GPS Data...", Toast.LENGTH_SHORT).show();
-                  //  Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                 }else{
                     // can't get location
                     // GPS or Network is not enabled
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
                 }
-                // PLaces to be broken into objects /
-               /* altamount gardens: 52.735844 , -6.720746
-                duckets Grove:52.857281 , -6.812316
-                Rathwood: 52.796104 , -6.659993
-                Oak Park: 52.8636388 , -6.8947948*/
                 // getting the random place from the travel distance selected //
                 randomPlace();
 
-
-
-
-
                 // Starting the map activity //
-
                 break;
-
-
         }
 
         if (newActivity != null) startActivity(newActivity);
     }
     public void randomPlace(){
-        Places places = new Places();
-        places.googlePlaces();
-
         final Services globalVariable = (Services) getApplicationContext();
-        double Rlatitude = globalVariable.getRLatitude();
-        double Rlongitude = globalVariable.getRLongitude();
-        double latitude = globalVariable.getLatitude();
-        double longitude = globalVariable.getLongitude();
-        double distanceInMeters=999999999; //=99999 in kms
-        double uDistance = globalVariable.getUdistance();
-        //Toast.makeText(getApplicationContext(), uDistance+ "selected distance in kms", Toast.LENGTH_LONG).show();
+        int uDistance = globalVariable.getUdistance();
+        Toast.makeText(getApplicationContext(),"In generate place", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"distance" + uDistance, Toast.LENGTH_SHORT).show();
 
-        // while(distanceInMeters < uDistance ) {
-        Random rand = new Random();
-       // Toast.makeText(getApplicationContext(), "It went in!", Toast.LENGTH_LONG).show();
-        int n = rand.nextInt(14);
-        switch (n) {
-          // Weeping Thiager Carlow //
-            case 0:
-                place="Weeping Thiager";
-                globalVariable.setRLatitude(52.8365072);
-                globalVariable.setRLongitude(-6.934135900000001);
-                break;
-            // Ho's chinese
-            case 1:
-                place="Ho's Chinese";
-                globalVariable.setRLatitude(52.8365072);
-                globalVariable.setRLongitude(-6.934135900000001);
-                break;
-            // Apache Pizza //
-            case 2:
-                place="Apache Pizza";
-                globalVariable.setRLatitude(52.8355179);
-                globalVariable.setRLongitude(-6.929197799999997);
-                break;
-            // Milano's takeaway //
-            case 3:
-                place="Milano's Takeaway";
-                globalVariable.setRLatitude(52.8365072);
-                globalVariable.setRLongitude(-6.934135900000001);
-                break;
-            // the Jasmine //
-            case 4:
-                place="The Jasmine";
-                globalVariable.setRLatitude(52.8359518);
-                globalVariable.setRLongitude(-6.9194409000000405);
-                break;
-            // Lennons Visual //
-            case 5:
-                place="Lennons @ Visual";
-                globalVariable.setRLatitude(52.839714);
-                globalVariable.setRLongitude(-6.928389299999935);
-                break;
-            //Teach dolmen //
-            case 6:
-                place="Teach Dolmen";
-                globalVariable.setRLatitude(52.8361513);
-                globalVariable.setRLongitude(-6.928155299999958);
-                break;
-            // lemonGrass //
-            case 7:
-                place="Lemon Grass";
-                globalVariable.setRLatitude(52.8350289);
-                globalVariable.setRLongitude(-6.929552000000058);
-                break;
-            case 8:
-                place="Joe's Chinese";
-                globalVariable.setRLatitude(52.8364779);
-                globalVariable.setRLongitude(-6.933574799999974);
-                break;
-            case 9:
-                place="Bombay Dinner";
-                globalVariable.setRLatitude(52.83509);
-                globalVariable.setRLongitude(-6.925709999999981);
-                break;
-            case 10:
-                place="Curry Garden";
-                globalVariable.setRLatitude(52.8389209);
-                globalVariable.setRLongitude(-6.942666700000018);
-                break;
-            case 11:
-                place="KUNF FU chinese";
-                globalVariable.setRLatitude(52.8376196);
-                globalVariable.setRLongitude(-6.938386499999979);
-                break;
-            case 12:
-                place="Mimosa Wine & Tapas";
-                globalVariable.setRLatitude(52.8374599);
-                globalVariable.setRLongitude(-6.929054299999962);
-                break;
-            case 13:
-                place="Pimento Tapas";
-                globalVariable.setRLatitude(52.8350289);
-                globalVariable.setRLongitude(-6.929552000000058);
-                break;
-            case 14:
-                place="Eddie Rockets";
-                globalVariable.setRLatitude(52.8365072);
-                globalVariable.setRLongitude(-6.934135900000001);
-                break;
-            default:
-                Toast.makeText(getApplicationContext(), " Random Location not found, Please try again...", Toast.LENGTH_LONG).show();
+        new googleplaces().execute();
+    }
+    public class googleplaces extends AsyncTask<View, Void, String> {
+        final Services globalVariable = (Services) getApplicationContext();
+        int uDistance = globalVariable.getUdistance();
+        @Override
+        protected String doInBackground(View... urls) {
+            /*final Services globalVariable = (Services) getApplicationContext();
+            double latitude = globalVariable.getLatitude();
+            double longitude = globalVariable.getLongitude();*/
+            //latitude = gps.getLatitude();
+            // longitude = gps.getLongitude();
 
+            System.out.println("FUCK!!!");
+            URL url;
+            HttpURLConnection urlConnection = null;
+            try {
+                url = new URL("https://maps.googleapis.com/maps/api/place/search/json?location=" + latitude + "," + longitude + "&radius=" + uDistance + "&type=restaurant&sensor=true&key=" + GOOGLE_KEY);
 
-        }
-        //Toast.makeText(getApplicationContext(), "Random Location is - \nLat: " + Rlatitude + "\nLong: " + Rlongitude, Toast.LENGTH_LONG).show();
+                urlConnection = (HttpURLConnection) url.openConnection();
 
-        // distanceInMeters = loc1.distanceTo(loc2);
-        distanceInMeters = calcDistance(latitude,longitude,Rlatitude,Rlongitude); //now actually kms
-        if(distanceInMeters > uDistance){
-            randomPlace();
-        }
-        else{
-           // Toast.makeText(getApplicationContext(), distanceInMeters + "distance appart", Toast.LENGTH_LONG).show();
+                int responseCode = urlConnection.getResponseCode();
+
+                if(responseCode == HttpURLConnection.HTTP_OK){
+                    server_response = readStream(urlConnection.getInputStream());
+                    Log.v("CatalogClient", server_response);
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
         }
 
-        //}
+        @Override
+        protected void onPreExecute() {
+            // start pulse animation here
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("Response", "" + server_response);
+            getPlaces(server_response);
+        }
+        private String readStream(InputStream in) {
+            BufferedReader reader = null;
+            StringBuffer response = new StringBuffer();
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return response.toString();
+        }
+        public void getPlaces(String result) {
+            if (result == null) {
+                // we have an error to the call
+                // stop pulse execution here
+                System.out.println("error");
+            } else {
+                // parse Google places search result
+                venuesList = (ArrayList<GooglePlace>) parseGoogleParse(result);
 
+                List<String> listTitle = new ArrayList<String>();
+                int items = venuesList.size();
+                Random rand = new Random();
+                int place = rand.nextInt(items);
+
+                Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getName() + " " +venuesList.get(place).getCounty() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getLatitude(), Toast.LENGTH_SHORT).show();
+
+                //stop pulse execution here
+            }
+        }
+    }
+    private static ArrayList<GooglePlace> parseGoogleParse(final String response) {
+
+        ArrayList<GooglePlace> temp = new ArrayList<GooglePlace>();
+        try {
+
+            // make an jsonObject in order to parse the response
+            JSONObject jsonObject = new JSONObject(response);
+
+            // make an jsonObject in order to parse the response
+            if (jsonObject.has("results")) {
+
+                JSONArray jsonArray = jsonObject.getJSONArray("results");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    GooglePlace poi = new GooglePlace();
+                    if (jsonArray.getJSONObject(i).has("name")) {
+                        poi.setName(jsonArray.getJSONObject(i).optString("name"));
+                        poi.setCounty(jsonArray.getJSONObject(i).optString("vicinity"));
+                        poi.setRating(jsonArray.getJSONObject(i).optString("rating", " "));
+                        //poi.setLatitude(jsonArray.getJSONObject(i).getJSONObject("location").optDouble("lat"));
+
+
+                        if (jsonArray.getJSONObject(i).has("opening_hours")) {
+                            if (jsonArray.getJSONObject(i).getJSONObject("opening_hours").has("open_now")) {
+                                if (jsonArray.getJSONObject(i).getJSONObject("opening_hours").getString("open_now").equals("true")) {
+                                    poi.setOpenNow("YES");
+                                } else {
+                                    poi.setOpenNow("NO");
+                                }
+                            }
+                        } else {
+                            poi.setOpenNow("Not Known");
+                        }
+                        if (jsonArray.getJSONObject(i).has("types")) {
+                            JSONArray typesArray = jsonArray.getJSONObject(i).getJSONArray("types");
+
+                            for (int j = 0; j < typesArray.length(); j++) {
+                                poi.setCategory(typesArray.getString(j) + ", " + poi.getCategory());
+                            }
+                        }
+                    }
+                    temp.add(poi);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<GooglePlace>();
+        }
+        return temp;
 
     }
-    public double calcDistance(double StartPlat, double StartPlong, double EndPlat, double EndPlong){
-        int Radius = 6371;// radius of earth in Km
-        double lat1 = StartPlat;
-        double lat2 = EndPlat;
-        double lon1 = StartPlong;
-        double lon2 = EndPlong;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
-                * Math.sin(dLon / 2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
-
-
-        return Radius * c;
-    }
-
     public void seekbarr() {
         seek_bar = (SeekBar) findViewById(R.id.DistanceBar);
         text_view = (TextView) findViewById(R.id.Miles);
         text_view.setText(seek_bar.getProgress()+ " Km");
         final Services globalVariable = (Services) getApplicationContext();
-
-
         seek_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress_value;
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
-
-
             }
 
             @Override
@@ -328,14 +283,10 @@ public class restaurant extends AppCompatActivity{
                 // TODO Auto-generated method stub
                 text_view.setText(progress + " Km");
                 // converting user selected distance to meters //
-                double prog = progress;
+                int prog = progress * 1000;
                 // Toast.makeText(getApplicationContext(), prog+ "selected distance in kms", Toast.LENGTH_LONG).show();
 
                 globalVariable.setuDistance(prog);
-
-
-
-
             }
         });
     }
