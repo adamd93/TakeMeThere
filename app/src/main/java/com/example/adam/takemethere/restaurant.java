@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,7 +70,7 @@ public class restaurant extends AppCompatActivity{
 
     public void onClickNext(View view) {
         Intent newActivity = null;
-        //final Services globalVariable = (Services) getApplicationContext();
+        final Services globalVariable = (Services) getApplicationContext();
         gps = new GPSTracker(restaurant.this);
        /* double latitude = globalVariable.getLatitude();
         double longitude = globalVariable.getLongitude();
@@ -116,8 +117,6 @@ public class restaurant extends AppCompatActivity{
     public void randomPlace(){
         final Services globalVariable = (Services) getApplicationContext();
         int uDistance = globalVariable.getUdistance();
-        Toast.makeText(getApplicationContext(),"In generate place", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(),"distance" + uDistance, Toast.LENGTH_SHORT).show();
 
         new googleplaces().execute();
     }
@@ -197,12 +196,26 @@ public class restaurant extends AppCompatActivity{
                 venuesList = (ArrayList<GooglePlace>) parseGoogleParse(result);
 
                 List<String> listTitle = new ArrayList<String>();
-                int items = venuesList.size();
-                Random rand = new Random();
-                int place = rand.nextInt(items);
+                RadioButton rb;
+                int numberOfRandoms = 0;
+                rb = (RadioButton) findViewById(R.id.radioButton);
 
-                Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getName() + " " +venuesList.get(place).getCounty() , Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getLatitude(), Toast.LENGTH_SHORT).show();
+                if(rb.isChecked()){
+                    numberOfRandoms = 1;
+                }
+                else{
+                    numberOfRandoms = 3;
+                }
+
+                int items = venuesList.size();
+                for(int i =0; i < numberOfRandoms ; i ++){
+                    Random rand = new Random();
+                    int place = rand.nextInt(items);
+
+                    Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getName() + " " +venuesList.get(place).getCounty() , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getLatitude() + " " + venuesList.get(place).getLongitude(), Toast.LENGTH_SHORT).show();
+                }
+
 
                 //stop pulse execution here
             }
@@ -224,11 +237,13 @@ public class restaurant extends AppCompatActivity{
                 for (int i = 0; i < jsonArray.length(); i++) {
                     GooglePlace poi = new GooglePlace();
                     if (jsonArray.getJSONObject(i).has("name")) {
+                        // Storing details of each place in list
+                        // Should optomize later to store only the random places choosen
                         poi.setName(jsonArray.getJSONObject(i).optString("name"));
                         poi.setCounty(jsonArray.getJSONObject(i).optString("vicinity"));
                         poi.setRating(jsonArray.getJSONObject(i).optString("rating", " "));
-                        //poi.setLatitude(jsonArray.getJSONObject(i).getJSONObject("location").optDouble("lat"));
-
+                        poi.setLatitude(jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").optDouble("lat"));
+                        poi.setLongitude(jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").optDouble("lng"));
 
                         if (jsonArray.getJSONObject(i).has("opening_hours")) {
                             if (jsonArray.getJSONObject(i).getJSONObject("opening_hours").has("open_now")) {

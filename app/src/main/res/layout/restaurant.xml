@@ -67,7 +67,7 @@
         android:layout_alignStart="@+id/btnShowLocation"
         android:onClick="onClickNext"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="130dp" />
+        android:layout_marginTop="100dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -79,8 +79,27 @@
         android:onClick="onClickNext"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="15dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 Option"
+            android:id="@+id/radioButton"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 Options"
+            android:id="@+id/radioButton2"
+            android:checked="false" />
+    </RadioGroup>
 
 
 </LinearLayout>
