@@ -7,6 +7,29 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".restaurant"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="39dp"
+            android:id="@+id/imageButton2"
+            android:background="#0e556e"
+            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+            android:layout_weight="0.06" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView"
+            android:src="@drawable/mr_ic_settings_light"
+            android:background="#0e556e"
+            android:onClick="settingsScreen" />
+    </LinearLayout>
+
     <TextView android:text="@string/restaurant" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20pt"
@@ -15,8 +38,8 @@
         android:layout_toStartOf="@+id/Miles"
         android:layout_alignEnd="@+id/DistanceBar"
         android:layout_marginRight="0dp"
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="0dp" />
 
     <TextView
@@ -67,7 +90,7 @@
         android:layout_alignStart="@+id/btnShowLocation"
         android:onClick="onClickNext"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="25dp" />
 
     <Button
         android:layout_width="wrap_content"

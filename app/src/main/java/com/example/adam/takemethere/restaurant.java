@@ -67,6 +67,11 @@ public class restaurant extends AppCompatActivity{
         seekbarr();
         btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
     }
+    public void settingsScreen (View view){
+        Intent intent = new Intent(getBaseContext(), settings.class);
+        startActivity(intent);
+
+    }
 
     public void onClickNext(View view) {
         Intent newActivity = null;
