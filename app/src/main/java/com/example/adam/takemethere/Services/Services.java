@@ -18,6 +18,7 @@ public class Services extends Application{
     private double Rlatitude;
     private String Rlocation="";
     private int uDistance;
+    private int numOfOption;
 
     public int getUdistance() {
 
@@ -78,6 +79,12 @@ public class Services extends Application{
     public String setRlocation() {
 
         return Rlocation;
+    }
+    public void setOption(int option){
+        numOfOption = option;
+    }
+    public int getOption(){
+        return numOfOption;
     }
 
 }

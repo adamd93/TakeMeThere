@@ -6,11 +6,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.StringDef;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -192,6 +196,8 @@ public class restaurant extends AppCompatActivity{
             return response.toString();
         }
         public void getPlaces(String result) {
+            final Services globalVariable = (Services) getApplicationContext();
+            double numOfOptions = globalVariable.getOption();
             if (result == null) {
                 // we have an error to the call
                 // stop pulse execution here
@@ -203,23 +209,42 @@ public class restaurant extends AppCompatActivity{
                 List<String> listTitle = new ArrayList<String>();
                 RadioButton rb;
                 int numberOfRandoms = 0;
-                rb = (RadioButton) findViewById(R.id.radioButton);
+               // rb = (RadioButton) findViewById(R.id.radioButton);
 
-                if(rb.isChecked()){
+                if(numOfOptions==1){
                     numberOfRandoms = 1;
                 }
                 else{
                     numberOfRandoms = 3;
                 }
+                LinearLayout l_layout = (LinearLayout) findViewById(R.id.linear_layout);
+                l_layout.setOrientation(LinearLayout.VERTICAL);
+                l_layout.removeAllViews();
 
                 int items = venuesList.size();
                 for(int i =0; i < numberOfRandoms ; i ++){
                     Random rand = new Random();
                     int place = rand.nextInt(items);
 
+
+                    Button btn1 = new Button(restaurant.this);
+
+                    String Location = venuesList.get(place).getName();
+                    double Rlatitude = venuesList.get(place).getLatitude();
+                    double Rlongitude = venuesList.get(place).getLongitude();
+                    double distance = calcDistance(latitude,longitude,Rlatitude,Rlongitude);
+                   // double distance = Math.round(distance1);
+                    String.format(Locale.CANADA,"%.2f", distance);
+                    btn1.setText(Location + "\n" +distance+ "km away");
+                    l_layout.addView(btn1);
+                   // btn1.setTextColor(333333);
+                   // btn1.setTextSize(12);
+                    btn1.setBackgroundColor(000000);
+                    btn1.setPadding(10,5,0,5);
                     Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getName() + " " +venuesList.get(place).getCounty() , Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getLatitude() + " " + venuesList.get(place).getLongitude(), Toast.LENGTH_SHORT).show();
                 }
+
 
 
                 //stop pulse execution here
@@ -310,4 +335,30 @@ public class restaurant extends AppCompatActivity{
             }
         });
     }
+    public double calcDistance(double StartPlat, double StartPlong, double EndPlat, double EndPlong){
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartPlat;
+        double lat2 = EndPlat;
+        double lon1 = StartPlong;
+        double lon2 = EndPlong;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+
+        return Radius * c;
+    }
 }
+
