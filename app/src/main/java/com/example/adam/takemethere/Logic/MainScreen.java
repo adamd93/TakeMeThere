@@ -3,9 +3,11 @@ package com.example.adam.takemethere.Logic;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.adam.takemethere.R;
+import com.example.adam.takemethere.dayout;
 import com.example.adam.takemethere.restaurant;
 import com.example.adam.takemethere.drive;
 
@@ -34,7 +36,12 @@ public class MainScreen extends AppCompatActivity {
                 Intent intent1 = new Intent(getBaseContext(), drive.class);
                 startActivity(intent1);
                 break;
-
+            case R.id.Dayout:
+                String not="not";
+                Log.e("went in",not);
+                Intent intent3 = new Intent(getBaseContext(), dayout.class);
+                startActivity(intent3);
+                break;
 
         }
 

@@ -30,9 +30,10 @@
         android:layout_width="wrap_content"
         android:layout_height="125dp"
         android:text="Dayout"
-        android:id="@+id/button3"
+        android:id="@+id/Dayout"
         android:layout_below="@+id/btnShowLocation"
         android:layout_centerHorizontal="true"
+        android:onClick="onClick"
         android:layout_marginTop="10dp" />
 
 </TableLayout>

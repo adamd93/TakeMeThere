@@ -1,16 +1,11 @@
 package com.example.adam.takemethere;
 
 import android.content.Intent;
-import android.location.Location;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.StringDef;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -19,12 +14,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.adam.takemethere.Logic.MainScreen;
-import com.example.adam.takemethere.R;
 import com.example.adam.takemethere.Services.GooglePlace;
-import com.example.adam.takemethere.Services.Places;
 import com.example.adam.takemethere.Services.Services;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,10 +34,9 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
- * Created by Adam on 11/02/2016.
+ * Created by Adam on 11/12/2016.
  */
-
-public class restaurant extends AppCompatActivity{
+public class dayout extends AppCompatActivity{
     private static SeekBar seek_bar;
     private static TextView text_view;
     private static ListView list_view;
@@ -68,7 +58,7 @@ public class restaurant extends AppCompatActivity{
         globalVariable.setLatitude(0);*/
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.restaurant);
+        setContentView(R.layout.dayout);
         seekbarr();
         btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
     }
@@ -81,7 +71,7 @@ public class restaurant extends AppCompatActivity{
     public void onClickNext(View view) {
         Intent newActivity = null;
         final Services globalVariable = (Services) getApplicationContext();
-        gps = new GPSTracker(restaurant.this);
+        gps = new GPSTracker(dayout.this);
        /* double latitude = globalVariable.getLatitude();
         double longitude = globalVariable.getLongitude();
         /*double Rlatitude = globalVariable.getRLatitude();
@@ -145,7 +135,7 @@ public class restaurant extends AppCompatActivity{
             URL url;
             HttpURLConnection urlConnection = null;
             try {
-                url = new URL("https://maps.googleapis.com/maps/api/place/search/json?location=" + latitude + "," + longitude + "&radius=" + uDistance + "&type=restaurant&sensor=true&key=" + GOOGLE_KEY);
+                url = new URL("https://maps.googleapis.com/maps/api/place/search/json?location=" + latitude + "," + longitude + "&radius=" + uDistance + "&type=point_of_interest&sensor=true&key=" + GOOGLE_KEY);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -210,7 +200,7 @@ public class restaurant extends AppCompatActivity{
                 List<String> listTitle = new ArrayList<String>();
                 RadioButton rb;
                 int numberOfRandoms = 0;
-               // rb = (RadioButton) findViewById(R.id.radioButton);
+                // rb = (RadioButton) findViewById(R.id.radioButton);
 
                 if(numOfOptions==1){
                     numberOfRandoms = 1;
@@ -228,18 +218,18 @@ public class restaurant extends AppCompatActivity{
                     //int place = rand.nextInt(items);
 
 
-                    final Button btn1 = new Button(restaurant.this);
+                    final Button btn1 = new Button(dayout.this);
                     final int place =  rand.nextInt(items);
                     String Location = venuesList.get(place).getName();
                     double Rlatitude = venuesList.get(place).getLatitude();
                     double Rlongitude = venuesList.get(place).getLongitude();
                     double distance = calcDistance(latitude,longitude,Rlatitude,Rlongitude);
-                   // double distance = Math.round(distance1);
+                    // double distance = Math.round(distance1);
                     String.format(Locale.CANADA,"%.2f", distance);
                     btn1.setText(Location + "\n" +distance+ "km away");
                     l_layout.addView(btn1);
-                   // btn1.setTextColor(333333);
-                   // btn1.setTextSize(12);
+                    // btn1.setTextColor(333333);
+                    // btn1.setTextSize(12);
                     btn1.setBackgroundColor(000000);
                     btn1.setPadding(10,5,0,5);
                     //list_view = (ListView) findViewById(R.id.listView);
@@ -365,4 +355,3 @@ public class restaurant extends AppCompatActivity{
         return Radius * c;
     }
 }
-

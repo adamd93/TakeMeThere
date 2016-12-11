@@ -13,6 +13,7 @@
     <string name="title_activity_maps_activity_drive">Map</string>
     <string name="drive">Drive</string>
     <string name="restaurant">Restaurant</string>
+    <string name="dayout">Dayout</string>
     <string name="take_me_there">Take Me There</string>
     <string name="distance">Distance</string>
     <string name="title_activity_settings">settings</string>
