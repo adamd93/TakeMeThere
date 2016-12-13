@@ -131,11 +131,10 @@ public class dayout extends AppCompatActivity{
             //latitude = globalVariable.getLatitude();
             //longitude = globalVariable.getLongitude();
 
-            System.out.println("FUCK!!!");
             URL url;
             HttpURLConnection urlConnection = null;
             try {
-                url = new URL("https://maps.googleapis.com/maps/api/place/search/json?location=" + latitude + "," + longitude + "&radius=" + uDistance + "&type=point_of_interest&sensor=true&key=" + GOOGLE_KEY);
+                url = new URL("https://maps.googleapis.com/maps/api/place/search/json?location=" + latitude + "," + longitude + "&radius=" + uDistance + "&&type=park&sensor=true&key=" + GOOGLE_KEY);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
 
