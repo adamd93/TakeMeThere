@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".drive"
     android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
 
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="39dp"
+            android:id="@+id/imageButton2"
+            android:background="#000e556e"
+            android:src="@mipmap/ic_back_button"
+            android:layout_weight="0.06" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView"
+            android:src="@drawable/mr_ic_settings_light"
+            android:background="#000e556e"
+            android:onClick="settingsScreen" />
+    </LinearLayout>
+    <View
+        android:id="@+id/myRectangleView"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/contentbar"/>
     <TextView android:text="@string/drive" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20pt"

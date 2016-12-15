@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".dayout"
+    android:layout_height="match_parent"
+    tools:context=".dayout"
     android:orientation="vertical"
     android:adjustViewBounds="true"
     android:id="@+id/linear_layout"
@@ -16,21 +15,29 @@
         android:weightSum="1">
 
         <ImageButton
-            android:layout_width="150dp"
+            android:layout_width="30dp"
             android:layout_height="39dp"
             android:id="@+id/imageButton2"
-            android:background="#0e556e"
-            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
-            android:layout_weight="0.06" />
+            android:background="#000e556e"
+            android:src="@mipmap/ic_back_button"
+            android:layout_weight="0.06"
+            android:layout_marginLeft="150dp" />
 
         <ImageView
-            android:layout_width="150dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:id="@+id/imageView"
             android:src="@drawable/mr_ic_settings_light"
-            android:background="#0e556e"
-            android:onClick="settingsScreen" />
+            android:background="#000e556e"
+            android:onClick="settingsScreen"
+            android:layout_gravity="top" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/myRectangleView"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/contentbar"/>
 
     <TextView android:text="@string/dayout" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,10 +46,10 @@
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/Miles"
         android:layout_alignEnd="@+id/DistanceBar"
-        android:layout_marginRight="0dp"
-        android:layout_marginLeft="0dp"
+        android:layout_marginLeft="65dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="0dp"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,18 +89,21 @@
         android:layout_marginBottom="0dp"
         android:layout_marginTop="25dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/take_me_there"
-        android:id="@+id/btnShowLocation"
-        android:layout_alignEnd="@+id/Miles"
-        android:layout_marginBottom="0dp"
-        android:onClick="onClickNext"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnShowLocation"
+            android:background="#000e556e"
+            android:src="@mipmap/take_me_there"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClickNext"
+            />
+    </LinearLayout>
 
 
 </LinearLayout>

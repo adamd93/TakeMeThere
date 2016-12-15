@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -51,7 +52,7 @@ public class restaurant extends AppCompatActivity{
     private static TextView text_view;
     private static ListView list_view;
     ArrayList<GooglePlace> venuesList;
-    Button btnShowLocation;
+    ImageButton btnShowLocation;
     String place;
     String server_response;
     double latitude = 52.839714;
@@ -70,7 +71,7 @@ public class restaurant extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant);
         seekbarr();
-        btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
+        btnShowLocation = (ImageButton) findViewById(R.id.btnShowLocation);
     }
     public void settingsScreen (View view){
         Intent intent = new Intent(getBaseContext(), settings.class);
@@ -107,7 +108,7 @@ public class restaurant extends AppCompatActivity{
                     globalVariable.setLatitude(latitude);*/
 
                     // \n is for new line
-                    Toast.makeText(getApplicationContext(),"Generating random Restaurant" + latitude+longitude, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Generating random Restaurant" + latitude+longitude, Toast.LENGTH_SHORT).show();
                     randomPlace();
 
                 }else{
@@ -221,6 +222,11 @@ public class restaurant extends AppCompatActivity{
                 LinearLayout l_layout = (LinearLayout) findViewById(R.id.linear_layout);
                 l_layout.setOrientation(LinearLayout.VERTICAL);
                 l_layout.removeAllViews();
+                final TextView randomText= new TextView(restaurant.this);
+                l_layout.addView(randomText);
+                randomText.setText("Restaurant Locations");
+                randomText.setTextSize(16);
+                randomText.setPadding(200,0,0,50);
 
                 int items = venuesList.size();
                 for(int i =0; i < numberOfRandoms ; i ++){

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -41,7 +42,7 @@ public class dayout extends AppCompatActivity{
     private static TextView text_view;
     private static ListView list_view;
     ArrayList<GooglePlace> venuesList;
-    Button btnShowLocation;
+    ImageButton btnShowLocation;
     String place;
     String server_response;
     double latitude = 52.839714;
@@ -60,7 +61,7 @@ public class dayout extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dayout);
         seekbarr();
-        btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
+        btnShowLocation = (ImageButton) findViewById(R.id.btnShowLocation);
     }
     public void settingsScreen (View view){
         Intent intent = new Intent(getBaseContext(), settings.class);
@@ -210,7 +211,12 @@ public class dayout extends AppCompatActivity{
                 LinearLayout l_layout = (LinearLayout) findViewById(R.id.linear_layout);
                 l_layout.setOrientation(LinearLayout.VERTICAL);
                 l_layout.removeAllViews();
-
+                final TextView randomText= new TextView(dayout.this);
+                l_layout.addView(randomText);
+                randomText.setText("Dayout Locations");
+                randomText.setTextSize(16);
+                randomText.setPadding(200,0,0,50);
+                
                 int items = venuesList.size();
                 for(int i =0; i < numberOfRandoms ; i ++){
                     Random rand = new Random();
@@ -235,7 +241,7 @@ public class dayout extends AppCompatActivity{
                     btn1.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             // Perform action on click
-                            Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getName() + " " +venuesList.get(place).getCounty() , Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getName() + " " +venuesList.get(place).getCounty() , Toast.LENGTH_SHORT).show();
                             //set longitude and latitude here to open map screen with marker location
                         }
                     });

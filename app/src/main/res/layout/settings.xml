@@ -40,13 +40,22 @@
             android:onClick="onClick" />
     </RadioGroup>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Distance in"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal" />
+
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Miles"
         android:id="@+id/switch1"
         android:layout_gravity="center_horizontal"
         android:checked="true"
         android:nestedScrollingEnabled="false"
-        android:onClick="changeMeasurment" />
+        android:contextClickable="true"
+        android:textOn="Kilometers"
+        android:text="Miles"
+        android:clickable="true" />
 </LinearLayout>
