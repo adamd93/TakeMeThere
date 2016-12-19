@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="contentBar">#4ABC96</color>
+    <color name="distanceBar">#4ABC96</color>
+    <color name="gray">#606060</color>
 </resources>

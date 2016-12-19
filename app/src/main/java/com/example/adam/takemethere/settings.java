@@ -28,7 +28,7 @@ public class settings extends AppCompatActivity{
         if (options==1){
             rb.setChecked(true);
         }
-        else if(options==0) {
+        else if(options==3) {
             rb1.setChecked(true);
         }
         else{
@@ -41,7 +41,7 @@ public class settings extends AppCompatActivity{
         RadioButton rb;
         rb = (RadioButton) findViewById(R.id.radioButton3);
         if(rb.isChecked()==true){
-            globalVariable.setOption(0);
+            globalVariable.setOption(3);
         }
         else{
             globalVariable.setOption(1);

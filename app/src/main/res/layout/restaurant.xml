@@ -23,14 +23,15 @@
             android:layout_weight="0.06"
             android:layout_marginLeft="150dp" />
 
-        <ImageView
+        <ImageButton
             android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView"
-            android:src="@drawable/mr_ic_settings_light"
-            android:background="#000e556e"
+            android:layout_height="39dp"
+            android:id="@+id/imageButton"
+            android:layout_weight="0.06"
             android:onClick="settingsScreen"
-            android:layout_gravity="top" />
+            android:src="@mipmap/setting1"
+            android:background="#000e556e" />
+
     </LinearLayout>
 
     <View
@@ -75,7 +76,10 @@
         android:layout_below="@+id/Distance"
         android:layout_gravity="center_horizontal"
         android:max="50"
-        android:progress="1" />
+        android:progress="1"
+        android:clickable="true"
+        android:progressTint="#4ABC96"
+        android:thumbTint="#4ABC96" />
 
     <TextView
         android:layout_width="wrap_content"

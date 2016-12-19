@@ -51,8 +51,10 @@ public class MapsActivityDrive extends FragmentActivity implements OnMapReadyCal
     public void onClick(View view) {
         Intent newActivity = null;
         final Services globalVariable = (Services) getApplicationContext();
-        double latitude = globalVariable.getLatitude();
-        double longitude = globalVariable.getLongitude();
+        /*double latitude = globalVariable.getLatitude();
+        double longitude = globalVariable.getLongitude();*/
+        double latitude = 52.839714;
+        double longitude = -6.928389299999935;
         double Rlatitude=globalVariable.getRLatitude();
         double Rlongitude=globalVariable.getRLongitude();
         switch (view.getId()) {
@@ -81,10 +83,10 @@ public class MapsActivityDrive extends FragmentActivity implements OnMapReadyCal
 
         // Calling Application class (see application tag in AndroidManifest.xml)
         final Services globalVariable = (Services) getApplicationContext();
-        double latitude = globalVariable.getLatitude();
-        double longitude = globalVariable.getLongitude();
-        //double latitude = 52.83098;
-        //double longitude = -6.920013;
+        /*double latitude = globalVariable.getLatitude();
+        double longitude = globalVariable.getLongitude();*/
+        double latitude = 52.839714;
+        double longitude = -6.928389299999935;
         double Rlatitude=globalVariable.getRLatitude();
         double Rlongitude=globalVariable.getRLongitude();
         // Add a marker to users location and move the camera

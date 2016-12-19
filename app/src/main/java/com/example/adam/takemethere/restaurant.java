@@ -25,6 +25,7 @@ import com.example.adam.takemethere.R;
 import com.example.adam.takemethere.Services.GooglePlace;
 import com.example.adam.takemethere.Services.Places;
 import com.example.adam.takemethere.Services.Services;
+import com.example.adam.takemethere.Services.calcDisatance;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -74,6 +75,8 @@ public class restaurant extends AppCompatActivity{
         btnShowLocation = (ImageButton) findViewById(R.id.btnShowLocation);
     }
     public void settingsScreen (View view){
+        final ImageButton buttonA = (ImageButton) findViewById(R.id.imageButton);
+        buttonA.setImageDrawable(getResources().getDrawable(R.mipmap.settings_clicked));
         Intent intent = new Intent(getBaseContext(), settings.class);
         startActivity(intent);
 
@@ -83,6 +86,8 @@ public class restaurant extends AppCompatActivity{
         Intent newActivity = null;
         final Services globalVariable = (Services) getApplicationContext();
         gps = new GPSTracker(restaurant.this);
+        final ImageButton buttonA = (ImageButton) findViewById(R.id.btnShowLocation);
+        buttonA.setImageDrawable(getResources().getDrawable(R.mipmap.take_me_there_clicked));
        /* double latitude = globalVariable.getLatitude();
         double longitude = globalVariable.getLongitude();
         /*double Rlatitude = globalVariable.getRLatitude();
@@ -233,14 +238,16 @@ public class restaurant extends AppCompatActivity{
                     Random rand = new Random();
                     //int place = rand.nextInt(items);
 
-
                     final Button btn1 = new Button(restaurant.this);
                     final int place =  rand.nextInt(items);
                     String Location = venuesList.get(place).getName();
-                    double Rlatitude = venuesList.get(place).getLatitude();
-                    double Rlongitude = venuesList.get(place).getLongitude();
-                    double distance = calcDistance(latitude,longitude,Rlatitude,Rlongitude);
-                   // double distance = Math.round(distance1);
+                    final double Rlatitude = venuesList.get(place).getLatitude();
+                    final double Rlongitude = venuesList.get(place).getLongitude();
+                   // double distance = calcDistance(latitude,longitude,Rlatitude,Rlongitude);
+                    final calcDisatance calcDistance = new calcDisatance();
+                    double distanceApart = calcDistance.calcDistance(latitude,longitude,Rlatitude,Rlongitude);
+
+                    double distance = Math.round(distanceApart*100.0)/100.0;
                     String.format(Locale.CANADA,"%.2f", distance);
                     btn1.setText(Location + "\n" +distance+ "km away");
                     l_layout.addView(btn1);
@@ -252,8 +259,17 @@ public class restaurant extends AppCompatActivity{
                     btn1.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             // Perform action on click
+                            globalVariable.setRLatitude(Rlatitude);
+                            globalVariable.setRLongitude(Rlongitude);
                             Toast.makeText(getApplicationContext(),"" +venuesList.get(place).getName() + " " +venuesList.get(place).getCounty() , Toast.LENGTH_SHORT).show();
                             //set longitude and latitude here to open map screen with marker location
+                            Intent intent = new Intent(getBaseContext(), MapsActivityDrive.class);
+                            Bundle mBundle = new Bundle();
+                            mBundle.putString("key", venuesList.get(place).getName());
+                            intent.putExtras(mBundle);
+                            startActivity(intent);
+                            startActivity(intent);
+
                         }
                     });
                 }
@@ -314,6 +330,15 @@ public class restaurant extends AppCompatActivity{
         return temp;
 
     }
+    public void onClickLocation(View view){
+        Intent intent = new Intent(getBaseContext(), MapsActivityDrive.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putString("key", place);
+        intent.putExtras(mBundle);
+        startActivity(intent);
+        startActivity(intent);
+
+    }
     public void seekbarr() {
         seek_bar = (SeekBar) findViewById(R.id.DistanceBar);
         text_view = (TextView) findViewById(R.id.Miles);
@@ -345,7 +370,7 @@ public class restaurant extends AppCompatActivity{
             }
         });
     }
-    public double calcDistance(double StartPlat, double StartPlong, double EndPlat, double EndPlong){
+    /*public double calcDistance(double StartPlat, double StartPlong, double EndPlat, double EndPlong){
         int Radius = 6371;// radius of earth in Km
         double lat1 = StartPlat;
         double lat2 = EndPlat;
@@ -369,6 +394,6 @@ public class restaurant extends AppCompatActivity{
 
 
         return Radius * c;
-    }
+    }*/
 }
 
